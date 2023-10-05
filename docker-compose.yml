@@ -1,0 +1,35 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_HOST : mysql
+      SPRING_DATASOURCE_PORT: 3306  # Use the custom port for MySQL
+      SPRING_DATASOURCE_USERNAME: Nithish
+      SPRING_DATASOURCE_PASSWORD: NithishSingh@143
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:8.0.27
+    ports:
+      - "3307:3306"  # Map container's port 3306 to host's port 3307
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo
+      MYSQL_USER: Nithish
+      MYSQL_PASSWORD: NithishSingh@143
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
